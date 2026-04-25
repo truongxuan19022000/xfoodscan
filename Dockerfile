@@ -23,7 +23,7 @@ RUN composer dump-autoload --optimize --no-dev
 # ---------- STAGE 3: PHP-FPM ----------
 FROM php:8.3-fpm
 
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 # ===== SYSTEM DEPENDENCIES =====
 RUN apt-get update && apt-get install -y \

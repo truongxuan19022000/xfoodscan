@@ -4,7 +4,7 @@ set -e
 echo "[Entrypoint] Starting container..."
 
 # ===== đảm bảo đúng thư mục Laravel =====
-cd /var/www/html
+cd /var/www
 
 # ===== check artisan tồn tại =====
 if [ ! -f artisan ]; then
