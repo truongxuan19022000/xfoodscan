@@ -33,7 +33,6 @@ storage/debugbar
 /public/js/app.js
 public/js/app.js
 public/js
-package-lock.json
 _ide_helper.php
 _ide_helper_models.php
 storage/media-library/
