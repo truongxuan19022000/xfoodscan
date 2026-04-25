@@ -41,6 +41,14 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
+# ===== NODE.JS (cho npm ci / npm run build) =====
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# ===== COMPOSER =====
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 # ===== PHP EXTENSIONS =====
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
@@ -66,12 +74,12 @@ COPY . .
 COPY --from=vendor /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
 
+# Copy entrypoint
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Quyền
 RUN chown -R www-data:www-data /var/www
 
-# Laravel optimize (giảm RAM runtime)
-RUN php artisan config:cache || true \
- && php artisan route:cache || true \
- && php artisan view:cache || true
-
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["php-fpm"]

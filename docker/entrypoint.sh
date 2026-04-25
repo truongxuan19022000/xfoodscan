@@ -25,6 +25,18 @@ if grep -q "APP_KEY=$" .env || grep -q "APP_KEY=\"\"" .env || grep -q "APP_KEY='
     php artisan key:generate --force
 fi
 
+# ===== cài vendor nếu chưa có =====
+if [ ! -d "vendor" ]; then
+    echo "[Entrypoint] Installing composer dependencies..."
+    composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
+fi
+
+# ===== build frontend nếu chưa có =====
+if [ ! -d "public/build" ]; then
+    echo "[Entrypoint] Building frontend assets..."
+    npm ci && npm run build
+fi
+
 # ===== chờ DB =====
 echo "Waiting for database..."
 MAX_TRIES=30
