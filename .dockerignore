@@ -1,0 +1,21 @@
+# Bỏ qua các thư mục và file không cần thiết khi build Docker
+/node_modules
+/vendor
+/public/build
+/public/hot
+/public/storage
+/.env
+/.git
+/.github
+/.vscode
+/.idea
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+npm-debug.log
+yarn-error.log
+*.sqlite
+*.log
