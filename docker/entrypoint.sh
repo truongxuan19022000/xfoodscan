@@ -24,7 +24,7 @@ fi
 # ===== cài vendor nếu chưa có =====
 if [ ! -d "vendor" ]; then
     echo "[Entrypoint] Installing composer dependencies..."
-    composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
+    composer install --no-interaction --prefer-dist --no-scripts --no-autoloader --no-dev --ignore-platform-reqs
 fi
 
 # ===== build frontend nếu chưa có =====
