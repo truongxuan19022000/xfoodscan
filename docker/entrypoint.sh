@@ -4,7 +4,7 @@ set -e
 echo "[Entrypoint] Starting container..."
 
 # ===== đảm bảo đúng thư mục Laravel =====
-cd /var/www || cd /var/www/html
+cd /var/www/html
 
 # ===== check artisan tồn tại =====
 if [ ! -f artisan ]; then
@@ -19,11 +19,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# ===== generate APP KEY =====
-if grep -q "APP_KEY=$" .env || grep -q "APP_KEY=\"\"" .env || grep -q "APP_KEY=''" .env; then
-    echo "Generating APP KEY..."
-    php artisan key:generate --force
-fi
+
 
 # ===== cài vendor nếu chưa có =====
 if [ ! -d "vendor" ]; then
@@ -35,6 +31,12 @@ fi
 if [ ! -d "public/build" ]; then
     echo "[Entrypoint] Building frontend assets..."
     npm ci && npm run build
+fi
+
+# ===== generate APP KEY =====
+if grep -q "APP_KEY=$" .env || grep -q "APP_KEY=\"\"" .env || grep -q "APP_KEY=''" .env; then
+    echo "Generating APP KEY..."
+    php artisan key:generate --force
 fi
 
 # ===== chờ DB =====
